@@ -347,6 +347,12 @@ package{
 			home = true; 
 			addEventListener(Event.ENTER_FRAME, OnEnterFrame); 
 			
+			//set up english btns as the default
+			popupPieces.setChildIndex(popupPieces.getChildByName("scBtn"), popupPieces.numChildren-1); 
+			popupPieces.setChildIndex(popupPieces.getChildByName("tcBtn2"), popupPieces.numChildren-1);
+			sc = false; 
+			tc = false; 
+			en = true;
 		}
 		private function checkForUser (e:TimerEvent):void
 		{
@@ -359,9 +365,12 @@ package{
 			timeOut.reset(); 
 			timeOut.start(); 
 			lang = "sc"; 
+			sc = true; 
 			pop1.setLang("sc"); 
 			
 			sc = true; 
+			en = false; 
+			tc = false; 
 //			pop2.setLang("sc"); 
 //			pop3.setLang("sc"); 
 //			pop4.setLang("sc"); 
@@ -394,46 +403,55 @@ package{
 				tween.fadeTo(0); 
 				
 				var tween2:Tween = new Tween(tcBtn2, fadeDownPopup); 
-				tween.fadeTo(0); 
+				tween2.fadeTo(0); 
 				
 				var tween3:Tween = new Tween(scBtn, fadeDownPopup); 
-				tween.fadeTo(1); 
+				tween3.fadeTo(1); 
 				
 				var tween4:Tween = new Tween(enBtn2, fadeDownPopup); 
-				tween.fadeTo(1); 
+				tween4.fadeTo(1); 
 				tween4.onComplete= function():void
-				{
-					swapChildren(enBtn, scBtn); 
-					swapChildren(tcBtn2, enBtn2); 
+				{	
+					trace("fade complete"); 
+					//move the current btns to the top of the stack in their container
+					popupPieces.setChildIndex(getChildByName("scBtn"),popupPieces.numChildren-1); 
+					popupPieces.setChildIndex(getChildByName("enBtn2"),popupPieces.numChildren-1); 
+					
 				}
 					
 			}
 			//if you're in english 
 			if(en)
 			{
-				var tween:Tween = new Tween(scBtn, fadeDownPopup); 
+				trace("detected lang as en"); 
+				var tween:Tween = new Tween(enBtn, fadeDownPopup); 
 				tween.fadeTo(0); 
 				
 				var tween2:Tween = new Tween(tcBtn2, fadeDownPopup); 
-				tween.fadeTo(0); 
+				tween2.fadeTo(0); 
 				
-				var tween3:Tween = new Tween(tcBtn, fadeDownPopup); 
-				tween.fadeTo(1); 
+				var tween3:Tween = new Tween(scBtn, fadeDownPopup); 
+				tween3.fadeTo(1); 
 				
 				var tween4:Tween = new Tween(enBtn2, fadeDownPopup); 
-				tween.fadeTo(1); 
+				tween4.fadeTo(1); 
 
 				tween4.onComplete= function():void
 				{
-					swapChildren(scBtn, tcBtn); 
-					swapChildren(tcBtn2, enBtn2); 
+					popupPieces.setChildIndex(getChildByName("scBtn"),popupPieces.numChildren-1); 
+					popupPieces.setChildIndex(getChildByName("enBtn2"),popupPieces.numChildren-1); 
 				}
-				//set the language switches 
-				en = false; 
-				sc = false; 
-				tc = true; 			} 
-
+			} 
+			
+			//pop2.setLang("tc"); 
+//			pop3.setLang("tc"); 
+//			pop4.setLang("tc"); 
+//			pop5.setLang("tc"); 
+//			pop6.setLang("tc"); 
+//			pop7.setLang("tc"); 
 			lang = "tc"; 
+			en = false; 
+			sc = false; 
 			tc = true; 
 		
 		}
@@ -446,7 +464,8 @@ package{
 			lang = "en" 
 			pop1.setLang("en"); 
 			en = true; 
-			
+			tc = false; 
+			sc = false; 
 //			pop2.setLang("en"); 
 //			pop3.setLang("en"); 
 //			pop4.setLang("en"); 
@@ -476,26 +495,7 @@ package{
 	
 			}
 			
-			//language buttons 
-			if(en) 
-			{
-			
-			}
-			
-			if(tc) 
-			{
-				en = true; 
-				sc = true; 
-				tc = false; 
-				var tween:Tween = new Tween(tcBtn,fadeDownPopup); 
-				tween.fadeTo(0); 
-				var tween2:Tween = new Tween(enBtn,fadeDownPopup); 
-				tween2.fadeTo(1); 
-				Starling.juggler.add(tween);
-				Starling.juggler.add(tween2); 
-				enBtn.enabled = true; 
-				tcBtn.enabled = false; 
-			}
+
 			
 		}
 		private function backBtnClicked(e:Event):void
