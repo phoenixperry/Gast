@@ -8,5 +8,11 @@ package
 		{
 			super();
 		}
+		
+		public function setLang(param0:String):void
+		{
+			// TODO Auto Generated method stub
+			
+		}
 	}
 }

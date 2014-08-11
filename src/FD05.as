@@ -7,5 +7,11 @@ package
 		public function FD05()
 		{
 		}
+		
+		public function setLang(s:String):void
+		{
+			// TODO Auto Generated method stub
+			
+		}
 	}
 }

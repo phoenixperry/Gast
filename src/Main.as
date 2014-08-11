@@ -76,7 +76,7 @@ package{
 
 		//collection of all photo Btns 
 		public var btns:Sprite;  
-		
+
 		//popup background 
 		[Embed(source="./assets/popup.png")]
 		private var popupBit:Class; 
@@ -356,46 +356,26 @@ package{
 		}
 		private function checkForUser (e:TimerEvent):void
 		{
-			//restart application 
+			//reset lang to English  
+			changeLang("en"); 
+		
 			//strace("restarting");
+			
 			
 		}
 		private function scBtnClicked(e:Event):void
 		{
-			timeOut.reset(); 
-			timeOut.start(); 
-			lang = "sc"; 
-			sc = true; 
-			pop1.setLang("sc"); 
-			
+			resetTimeout(); 
+			changeLang("sc"); 
+
 			sc = true; 
 			en = false; 
 			tc = false; 
-//			pop2.setLang("sc"); 
-//			pop3.setLang("sc"); 
-//			pop4.setLang("sc"); 
-//			pop5.setLang("sc"); 
-//			pop6.setLang("sc"); 
-//			pop7.setLang("sc");
-			
-
-			
 		}
 		
 		private function tcBtnClicked(e:Event):void
 		{
-			// TODO Auto Generated method stub
-			timeOut.reset(); 
-			timeOut.start(); 
-		
-			pop1.setLang("tc"); 
-//			pop2.setLang("tc"); 
-//			pop3.setLang("tc"); 
-//			pop4.setLang("tc"); 
-//			pop5.setLang("tc"); 
-//			pop6.setLang("tc"); 
-//			pop7.setLang("tc"); 
-			
+			resetTimeout(); 
 			//if you're in simple chinese  
 			if(sc)
 			{
@@ -443,13 +423,7 @@ package{
 				}
 			} 
 			
-			//pop2.setLang("tc"); 
-//			pop3.setLang("tc"); 
-//			pop4.setLang("tc"); 
-//			pop5.setLang("tc"); 
-//			pop6.setLang("tc"); 
-//			pop7.setLang("tc"); 
-			lang = "tc"; 
+			changeLang("tc"); 
 			en = false; 
 			sc = false; 
 			tc = true; 
@@ -458,25 +432,24 @@ package{
 		
 		private function enBtnClicked(e:Event):void
 		{
-			timeOut.reset(); 
-			timeOut.start(); 
-			// TODO Auto Generated method stub
-			lang = "en" 
-			pop1.setLang("en"); 
+			resetTimeout();
 			en = true; 
 			tc = false; 
 			sc = false; 
-//			pop2.setLang("en"); 
-//			pop3.setLang("en"); 
-//			pop4.setLang("en"); 
-//			pop5.setLang("en"); 
-//			pop6.setLang("en"); 
-//			pop7.setLang("en"); 
+			changeLang("en"); 
+			
+		}
+		
+		private function resetTimeout():void
+		{
+			timeOut.reset(); 
+			timeOut.start(); 
 			
 		}
 		
 		private function OnEnterFrame():void
 		{
+			//main driving state machine 
 			if(p1 && back)
 			{
 				var tween:Tween = new Tween(popupPieces,fadeDownPopup); 
@@ -492,11 +465,105 @@ package{
 				}
 				back = false; 
 				p1 = false; 
-	
+			}
+			if(p2 && back)
+			{
+				var tween:Tween = new Tween(popupPieces,fadeDownPopup); 
+				tween.fadeTo(0); 
+				var tween2:Tween = new Tween(pop2,fadeDownPopup); 
+				tween2.fadeTo(0); 
+				Starling.juggler.add(tween);
+				Starling.juggler.add(tween2); 
+				tween.onComplete = function():void 
+				{
+					swapChildren(popups, btns); 
+					trace("finished tween", getChildAt(0).name, getChildAt(1).name, getChildAt(2).name); 
+				}
+				back = false; 
+				p2 = false; 
 			}
 			
-
+			if(p3 && back)
+			{
+				var tween:Tween = new Tween(popupPieces,fadeDownPopup); 
+				tween.fadeTo(0); 
+				var tween2:Tween = new Tween(pop3,fadeDownPopup); 
+				tween2.fadeTo(0); 
+				Starling.juggler.add(tween);
+				Starling.juggler.add(tween2); 
+				tween.onComplete = function():void 
+				{
+					swapChildren(popups, btns); 
+					trace("finished tween", getChildAt(0).name, getChildAt(1).name, getChildAt(2).name); 
+				}
+				back = false; 
+				p3 = false; 
+			}
+			if(p4 && back)
+			{
+				var tween:Tween = new Tween(popupPieces,fadeDownPopup); 
+				tween.fadeTo(0); 
+				var tween2:Tween = new Tween(pop4,fadeDownPopup); 
+				tween2.fadeTo(0); 
+				Starling.juggler.add(tween);
+				Starling.juggler.add(tween2); 
+				tween.onComplete = function():void 
+				{
+					swapChildren(popups, btns); 
+					trace("finished tween", getChildAt(0).name, getChildAt(1).name, getChildAt(2).name); 
+				}
+				back = false; 
+				p4 = false; 
+			}
 			
+			if(p5 && back)
+			{
+				var tween:Tween = new Tween(popupPieces,fadeDownPopup); 
+				tween.fadeTo(0); 
+				var tween2:Tween = new Tween(pop5,fadeDownPopup); 
+				tween2.fadeTo(0); 
+				Starling.juggler.add(tween);
+				Starling.juggler.add(tween2); 
+				tween.onComplete = function():void 
+				{
+					swapChildren(popups, btns); 
+					trace("finished tween", getChildAt(0).name, getChildAt(1).name, getChildAt(2).name); 
+				}
+				back = false; 
+				p5 = false; 
+			}
+			if(p6 && back)
+			{
+				var tween:Tween = new Tween(popupPieces,fadeDownPopup); 
+				tween.fadeTo(0); 
+				var tween2:Tween = new Tween(pop6,fadeDownPopup); 
+				tween2.fadeTo(0); 
+				Starling.juggler.add(tween);
+				Starling.juggler.add(tween2); 
+				tween.onComplete = function():void 
+				{
+					swapChildren(popups, btns); 
+					trace("finished tween", getChildAt(0).name, getChildAt(1).name, getChildAt(2).name); 
+				}
+				back = false; 
+				p6 = false; 
+			}
+			if(p7 && back)
+			{
+				var tween:Tween = new Tween(popupPieces,fadeDownPopup); 
+				tween.fadeTo(0); 
+				var tween2:Tween = new Tween(pop7,fadeDownPopup); 
+				tween2.fadeTo(0); 
+				Starling.juggler.add(tween);
+				Starling.juggler.add(tween2); 
+				tween.onComplete = function():void 
+				{
+					swapChildren(popups, btns); 
+					trace("finished tween", getChildAt(0).name, getChildAt(1).name, getChildAt(2).name); 
+				}
+				back = false; 
+				p7 = false; 
+			}
 		}
 		private function backBtnClicked(e:Event):void
 		{
@@ -506,13 +573,8 @@ package{
 				
 		}
 		public function popup1(e:Event):void{
-			timeOut.reset(); 
-			timeOut.start(); 
+			resetTimeout(); 
 			trace("1");
-			
-			//reset the timer
-			//check for the langauge 
-			//fade up + scale the right poopup 
 			swapChildren(popups, btns); 
 			var tween:Tween = new Tween(popupPieces, fadeUpPopup); 
 			tween.fadeTo(1); 
@@ -520,43 +582,104 @@ package{
 			tween2.fadeTo(1); 
 			Starling.juggler.add(tween);
 			Starling.juggler.add(tween2); 
-	
 			back = false; 
 			p1 = true; 
-			
-			
 		}	
 		public function popup2(e:Event):void{
-			timeOut.reset(); 
-			timeOut.start(); 
+
 			trace("2"); 
+			resetTimeout(); 
+			trace("1");
+			swapChildren(popups, btns); 
+			var tween:Tween = new Tween(popupPieces, fadeUpPopup); 
+			tween.fadeTo(1); 
+			var tween2:Tween = new Tween(pop2,fadeUpPopup); 
+			tween2.fadeTo(1); 
+			Starling.juggler.add(tween);
+			Starling.juggler.add(tween2); 
+			back = false; 
+			p2 = true; 
 		}	
-		public function popup3(e:Event):void{
-			timeOut.reset(); 
-			timeOut.start(); 
+		public function popup3(e:Event):void{ 
 			trace("3"); 
+			resetTimeout(); 
+			swapChildren(popups, btns); 
+			var tween:Tween = new Tween(popupPieces, fadeUpPopup); 
+			tween.fadeTo(1); 
+			var tween2:Tween = new Tween(pop3,fadeUpPopup); 
+			tween2.fadeTo(1); 
+			Starling.juggler.add(tween);
+			Starling.juggler.add(tween2); 
+			back = false; 
+			p3 = true; 
 		}	
 		public function popup4(e:Event):void{
-			timeOut.reset(); 
-			timeOut.start(); 
 			trace("4"); 
+			resetTimeout(); 
+			swapChildren(popups, btns); 
+			var tween:Tween = new Tween(popupPieces, fadeUpPopup); 
+			tween.fadeTo(1); 
+			var tween2:Tween = new Tween(pop4,fadeUpPopup); 
+			tween2.fadeTo(1); 
+			Starling.juggler.add(tween);
+			Starling.juggler.add(tween2); 
+			back = false; 
+			p4 = true; 
 		}	
 		public function popup5(e:Event):void{
-			timeOut.reset(); 
-			timeOut.start(); 
 			trace("5"); 
+			resetTimeout(); 
+			swapChildren(popups, btns); 
+			var tween:Tween = new Tween(popupPieces, fadeUpPopup); 
+			tween.fadeTo(1); 
+			var tween2:Tween = new Tween(pop5,fadeUpPopup); 
+			tween2.fadeTo(1); 
+			Starling.juggler.add(tween);
+			Starling.juggler.add(tween2); 
+			back = false; 
+			p5 = true; 
+
 		}	
 		public function popup6(e:Event):void{
-			timeOut.reset(); 
-			timeOut.start(); 
 			trace("6"); 
+			resetTimeout(); 
+			swapChildren(popups, btns); 
+			var tween:Tween = new Tween(popupPieces, fadeUpPopup); 
+			tween.fadeTo(1); 
+			var tween2:Tween = new Tween(pop6,fadeUpPopup); 
+			tween2.fadeTo(1); 
+			Starling.juggler.add(tween);
+			Starling.juggler.add(tween2); 
+			back = false; 
+			p6 = true; 
+
 		}	
 		
 		public function popup7(e:Event):void{
-			timeOut.reset(); 
-			timeOut.start(); 
 			trace("7"); 
+			resetTimeout(); 
+			swapChildren(popups, btns); 
+			var tween:Tween = new Tween(popupPieces, fadeUpPopup); 
+			tween.fadeTo(1); 
+			var tween2:Tween = new Tween(pop7,fadeUpPopup); 
+			tween2.fadeTo(1); 
+			Starling.juggler.add(tween);
+			Starling.juggler.add(tween2); 
+			back = false; 
+			p7 = true; 
+ 
 		}		
+		
+		public function changeLang(s:String):void 
+		{
+			pop1.setLang(s); 
+			pop2.setLang(s); 
+			pop3.setLang(s); 
+			pop4.setLang(s); 
+			pop5.setLang(s); 
+			pop6.setLang(s); 
+			pop7.setLang(s); 
+		}
 
 		
 	
