@@ -77,8 +77,10 @@ package{
 
 		//collection of all photo Btns 
 		public var btns:Sprite;  
-
+		//data collection of all btns 
+		public var allBtns:Vector.<Button>; 
 		//popup background 
+		
 		[Embed(source="./assets/popup.png")]
 		private var popupBit:Class; 
 		private var popupTexture:Texture; 
@@ -342,6 +344,14 @@ package{
 			btns.name = "btns"; 
 			//adding the collection 
 			addChildAt(btns,2);
+			allBtns = new Vector.<Button>(); 
+			allBtns.push(btn01); 
+			allBtns.push(btn02); 
+			allBtns.push(btn03); 
+			allBtns.push(btn04); 
+			allBtns.push(btn05); 
+			allBtns.push(btn06); 
+			allBtns.push(btn07); 
 			
 			//debug timer
 			timeOut = new Timer (timeBeforeReset);
@@ -546,6 +556,7 @@ package{
 		}
 		private function fadeOutPopup(pop:Sprite):void
 		{
+			changeBtnState(true); 
 			home = false; 
 			back = false; 
 			var tween:Tween = new Tween(popupPieces,fadeDownPopup); 
@@ -572,22 +583,26 @@ package{
 			timeOut.reset(); 
 			timeOut.start(); 
 			back = true;	
-			//fade up background and btns 
-//			var tweenbg:Tween = new Tween(bgImage, fadeBackground); 
-//			tweenbg.fadeTo(1);  
-//			Starling.juggler.add(tweenbg); 
-//			var tweenbgBtns = new Tween(btns, fadeBackground); 
-//			tweenbgBtns.fadeTo(1); 
-//			Starling.juggler.add(tweenbgBtns); 
-				
+		}
+		public function changeBtnState(b:Boolean):void
+		{
+			trace(allBtns.length); 
+			for each (var button:Button in allBtns) 
+			{
+				button.enabled = b;
+				trace(button.name, button.enabled); 
+			}
 		}
 		public function fadeInPopup(pop:Sprite):void{
 			resetTimeout(); 
+			changeBtnState(false); 
 			//fade down background and btns 
 			var tweenbg:Tween = new Tween(bgImage, fadeBackground); 
 			tweenbg.fadeTo(.70); 
 			Starling.juggler.add(tweenbg); 
 			var tweenbgBtns:Tween = new Tween(btns, fadeBackground); 
+		
+			
 			tweenbgBtns.fadeTo(.70); 
 			Starling.juggler.add(tweenbgBtns); 
 			
@@ -602,14 +617,11 @@ package{
 			
 		}
 		public function popup1(e:Event):void{
-		
-			trace("1");
 			swapChildren(popups, btns); 
 			fadeInPopup(pop1); 
 			p1 = true; 
 		}	
 		public function popup2(e:Event):void{
-			trace("1");
 			swapChildren(popups, btns); 
 			fadeInPopup(pop2); 
 			p2 = true; 
