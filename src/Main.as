@@ -7,6 +7,7 @@ package{
 	import flash.events.TimerEvent;
 	import flash.geom.Rectangle;
 	import flash.net.dns.AAAARecord;
+	import flash.sampler.startSampling;
 	import flash.system.ImageDecodingPolicy;
 	import flash.utils.Timer;
 	
@@ -126,15 +127,16 @@ package{
 		private var popups:Sprite; 
 		
 		//all transitions 
-		private var fadeDownPopup = .5; 
-		private var fadeUpPopup = .5; 
-		private var fadeChangeLang = .5; 
+		private var fadeDownPopup:Number = .75; 
+		private var fadeUpPopup:Number = .5; 
+		private var fadeChangeLang:Number = .5; 
+		private var fadeBackground:Number = .5; 
 		
 		//state machine mechanics 
-		private var p1,p2,p3,p4,p5,p6,p7:Boolean = false; 
-		private var home = true; 
-		private var back = false; 
-		private var en,sc,tc:Boolean = true; 
+		private var p1:Boolean,p2:Boolean,p3:Boolean,p4:Boolean,p5:Boolean,p6:Boolean,p7:Boolean = false; 
+		private var home:Boolean = true; 
+		private var back:Boolean = false; 
+		private var en:Boolean,sc:Boolean,tc:Boolean = true; 
 		
 		public function Main()
 		{
@@ -167,7 +169,7 @@ package{
 			pop2.name = "pop2"; 
 			pop3 = new LS03();
 			pop3.name = "pop3"; 
-			pop4 = new JS04(); 
+			pop4 = new JS04();  
 			pop4.name = "pop4"; 
 			pop5 = new FD05(); 
 			pop5.name = "pop5"; 
@@ -190,7 +192,7 @@ package{
 			popupImage.name = "popupBg"; 
 			popupPieces.addChildAt(popupImage,0);
 	
-			var backBitmap = new backBit(); 
+			var backBitmap:Bitmap = new backBit(); 
 			backTexture = Texture.fromBitmap(backBitmap); 
 			backBtn = new Button(backTexture,"",backTexture); 
 			backBtn.addEventListener(Event.TRIGGERED, backBtnClicked);
@@ -207,10 +209,10 @@ package{
 			enBtn.addEventListener(Event.TRIGGERED, enBtnClicked);
 			enBtn2.addEventListener(Event.TRIGGERED, enBtnClicked);
 			//enBtn.alpha =0; 
-			enBtn2.x = 1117; 
-			enBtn2.y = 776; 
 			enBtn.x = 905; 
 			enBtn.y = 776; 
+			enBtn2.x = 1117; 
+			enBtn2.y = 776; 
 			enBtn.name = "enBtn"; 
 			enBtn2.name = "enBtn2"; 
 			en = false; //have the english button off to start with 
@@ -223,10 +225,10 @@ package{
 			tcBtn2 = new Button(tcBtnTexture, "", tcBtnTexture); 
 			tcBtn.addEventListener(Event.TRIGGERED, tcBtnClicked); 
 			tcBtn2.addEventListener(Event.TRIGGERED, tcBtnClicked); 
-			tcBtn2.x = 1117; 
-			tcBtn2.y = 776; 
 			tcBtn.x = 905; 
 			tcBtn.y = 776; 
+			tcBtn2.x = 1117; 
+			tcBtn2.y = 776; 
 			tcBtn.name = "tcBtn"; 
 			tcBtn2.name = "tcBtn2"; 
 		
@@ -272,7 +274,7 @@ package{
 			
 			//add the photo btns and put them in btns container 
 			
-			var btn01Bitmap = new btn01bit();
+			var btn01Bitmap:Bitmap = new btn01bit();
 			btn01Texture = Texture.fromBitmap(btn01Bitmap); 
 			btn01 = new Button(btn01Texture, "", btn01Texture); 
 			btn01.x = 96; 
@@ -282,7 +284,7 @@ package{
 			btns.addChild(btn01);
 			
 			
-			var btn02Bitmap = new btn02Bit();
+			var btn02Bitmap:Bitmap = new btn02Bit();
 			btn02Texture = Texture.fromBitmap(btn02Bitmap); 
 			btn02 = new Button(btn02Texture, "", btn02Texture); 
 			btn02.x = 94; 
@@ -292,7 +294,7 @@ package{
 			btns.addChild(btn02); 
 			
 			
-			var btn03Bitmap = new btn03Bit();
+			var btn03Bitmap:Bitmap = new btn03Bit();
 			btn03Texture = Texture.fromBitmap(btn03Bitmap); 
 			btn03 = new Button(btn03Texture, "", btn03Texture); 
 			btn03.x = 94; 
@@ -301,7 +303,7 @@ package{
 			btn03.addEventListener(Event.TRIGGERED, popup3);
 			btns.addChild(btn03); 
 			
-			var btn04Bitmap = new btn04Bit();
+			var btn04Bitmap:Bitmap = new btn04Bit();
 			btn04Texture = Texture.fromBitmap(btn04Bitmap); 
 			btn04 = new Button(btn04Texture, "", btn04Texture); 
 			btn04.x = 398; 
@@ -310,7 +312,7 @@ package{
 			btn04.addEventListener(Event.TRIGGERED, popup4);
 			btns.addChild(btn04); 
 			
-			var btn05Bitmap = new btn05Bit();
+			var btn05Bitmap:Bitmap = new btn05Bit();
 			btn05Texture = Texture.fromBitmap(btn05Bitmap); 
 			btn05 = new Button(btn05Texture, "", btn05Texture); 
 			btn05.x = 1363; 
@@ -319,7 +321,7 @@ package{
 			btn05.addEventListener(Event.TRIGGERED, popup5);
 			btns.addChild(btn05); 
 			
-			var btn06Bitmap = new btn06Bit();
+			var btn06Bitmap:Bitmap = new btn06Bit();
 			btn06Texture = Texture.fromBitmap(btn06Bitmap); 
 			btn06 = new Button(btn06Texture,"", btn06Texture); 
 			btn06.x = 1642; 
@@ -328,7 +330,7 @@ package{
 			btn06.addEventListener(Event.TRIGGERED, popup6);
 			btns.addChild(btn06);
 			
-			var btn07Bitmap = new btn07Bit();
+			var btn07Bitmap:Bitmap = new btn07Bit();
 			btn07Texture = Texture.fromBitmap(btn07Bitmap); 
 			btn07 = new Button(btn07Texture, "", btn07Texture); 
 			btn07.x = 1647; 
@@ -353,7 +355,14 @@ package{
 			sc = false; 
 			tc = false; 
 			en = true;
+			//turn down alpha on all non-visible buttons 
+			popupPieces.getChildByName("scBtn2").alpha = 0;
+			popupPieces.getChildByName("tcBtn").alpha = 0;
+			popupPieces.getChildByName("enBtn").alpha = 0;
+			popupPieces.getChildByName("enBtn2").alpha = 0;
+			
 		}
+	
 		private function checkForUser (e:TimerEvent):void
 		{
 			//reset lang to English  
@@ -363,14 +372,48 @@ package{
 			
 			
 		}
+
+		private function swapButtons(btn1:Button, btn2:Button,btn3:Button, btn4:Button ):void
+		{
+			//btn1.alpha = 0; 
+			var tween:Tween = new Tween(btn1, fadeDownPopup); 
+			tween.fadeTo(0); 
+			Starling.juggler.add(tween); 
+			
+			var tween2:Tween = new Tween(btn2, fadeDownPopup); 
+			tween2.fadeTo(0); 
+			Starling.juggler.add(tween2); 
+			
+			var tween3:Tween = new Tween(btn3, fadeDownPopup); 
+			tween3.fadeTo(1); 
+			Starling.juggler.add(tween3); 
+			
+			var tween4:Tween = new Tween(btn4, fadeDownPopup); 
+			tween4.fadeTo(1); 
+			Starling.juggler.add(tween4); 
+			
+			popupPieces.setChildIndex(popupPieces.getChildByName(btn3.name),popupPieces.numChildren-1); 
+			popupPieces.setChildIndex(popupPieces.getChildByName(btn4.name),popupPieces.numChildren-1); 
+			
+			
+		}
 		private function scBtnClicked(e:Event):void
 		{
 			resetTimeout(); 
 			changeLang("sc"); 
-
+			if(tc)
+			{
+				swapButtons(scBtn,enBtn2, enBtn, tcBtn2);
+			}
+			//if you're in english 
+			if(en)
+			{
+				swapButtons(scBtn, tcBtn2, enBtn, tcBtn2); 
+			} 
 			sc = true; 
 			en = false; 
 			tc = false; 
+			
 		}
 		
 		private function tcBtnClicked(e:Event):void
@@ -379,48 +422,12 @@ package{
 			//if you're in simple chinese  
 			if(sc)
 			{
-				var tween:Tween = new Tween(enBtn, fadeDownPopup); 
-				tween.fadeTo(0); 
-				
-				var tween2:Tween = new Tween(tcBtn2, fadeDownPopup); 
-				tween2.fadeTo(0); 
-				
-				var tween3:Tween = new Tween(scBtn, fadeDownPopup); 
-				tween3.fadeTo(1); 
-				
-				var tween4:Tween = new Tween(enBtn2, fadeDownPopup); 
-				tween4.fadeTo(1); 
-				tween4.onComplete= function():void
-				{	
-					trace("fade complete"); 
-					//move the current btns to the top of the stack in their container
-					popupPieces.setChildIndex(getChildByName("scBtn"),popupPieces.numChildren-1); 
-					popupPieces.setChildIndex(getChildByName("enBtn2"),popupPieces.numChildren-1); 
-					
-				}
-					
+				swapButtons(enBtn,tcBtn2, scBtn, enBtn2);
 			}
 			//if you're in english 
 			if(en)
 			{
-				trace("detected lang as en"); 
-				var tween:Tween = new Tween(enBtn, fadeDownPopup); 
-				tween.fadeTo(0); 
-				
-				var tween2:Tween = new Tween(tcBtn2, fadeDownPopup); 
-				tween2.fadeTo(0); 
-				
-				var tween3:Tween = new Tween(scBtn, fadeDownPopup); 
-				tween3.fadeTo(1); 
-				
-				var tween4:Tween = new Tween(enBtn2, fadeDownPopup); 
-				tween4.fadeTo(1); 
-
-				tween4.onComplete= function():void
-				{
-					popupPieces.setChildIndex(getChildByName("scBtn"),popupPieces.numChildren-1); 
-					popupPieces.setChildIndex(getChildByName("enBtn2"),popupPieces.numChildren-1); 
-				}
+				swapButtons(scBtn, tcBtn2, scBtn, enBtn2); 
 			} 
 			
 			changeLang("tc"); 
@@ -433,6 +440,16 @@ package{
 		private function enBtnClicked(e:Event):void
 		{
 			resetTimeout();
+			if(sc)
+			{
+				swapButtons(enBtn,tcBtn2, scBtn, tcBtn2);
+			}
+			//if you're in english 
+			if(tc)
+			{
+				swapButtons(scBtn, enBtn2, scBtn, tcBtn2); 
+			} 
+			
 			en = true; 
 			tc = false; 
 			sc = false; 
@@ -570,102 +587,74 @@ package{
 			timeOut.reset(); 
 			timeOut.start(); 
 			back = true;	
+			//fade up background and btns 
+			var tweenbg:Tween = new Tween(bgImage, fadeBackground); 
+			tweenbg.fadeTo(1);  
+			Starling.juggler.add(tweenbg); 
+			var tweenbgBtns = new Tween(btns, fadeBackground); 
+			tweenbgBtns.fadeTo(1); 
+			Starling.juggler.add(tweenbgBtns); 
 				
 		}
-		public function popup1(e:Event):void{
+		public function fadeInPopup(pop:Sprite):void{
 			resetTimeout(); 
-			trace("1");
-			swapChildren(popups, btns); 
+			//fade down background and btns 
+			var tweenbg:Tween = new Tween(bgImage, fadeBackground); 
+			tweenbg.fadeTo(.70); 
+			Starling.juggler.add(tweenbg); 
+			var tweenbgBtns:Tween = new Tween(btns, fadeBackground); 
+			tweenbgBtns.fadeTo(.70); 
+			Starling.juggler.add(tweenbgBtns); 
+			
+			//fade up popup pieces 
 			var tween:Tween = new Tween(popupPieces, fadeUpPopup); 
 			tween.fadeTo(1); 
-			var tween2:Tween = new Tween(pop1,fadeUpPopup); 
+			var tween2:Tween = new Tween(pop,fadeUpPopup); 
 			tween2.fadeTo(1); 
 			Starling.juggler.add(tween);
 			Starling.juggler.add(tween2); 
 			back = false; 
+			
+		}
+		public function popup1(e:Event):void{
+		
+			trace("1");
+			swapChildren(popups, btns); 
+			fadeInPopup(pop1); 
 			p1 = true; 
 		}	
 		public function popup2(e:Event):void{
-
-			trace("2"); 
-			resetTimeout(); 
 			trace("1");
 			swapChildren(popups, btns); 
-			var tween:Tween = new Tween(popupPieces, fadeUpPopup); 
-			tween.fadeTo(1); 
-			var tween2:Tween = new Tween(pop2,fadeUpPopup); 
-			tween2.fadeTo(1); 
-			Starling.juggler.add(tween);
-			Starling.juggler.add(tween2); 
-			back = false; 
+			fadeInPopup(pop2); 
 			p2 = true; 
 		}	
 		public function popup3(e:Event):void{ 
-			trace("3"); 
-			resetTimeout(); 
 			swapChildren(popups, btns); 
-			var tween:Tween = new Tween(popupPieces, fadeUpPopup); 
-			tween.fadeTo(1); 
-			var tween2:Tween = new Tween(pop3,fadeUpPopup); 
-			tween2.fadeTo(1); 
-			Starling.juggler.add(tween);
-			Starling.juggler.add(tween2); 
-			back = false; 
+			fadeInPopup(pop3); 
 			p3 = true; 
 		}	
 		public function popup4(e:Event):void{
-			trace("4"); 
-			resetTimeout(); 
 			swapChildren(popups, btns); 
-			var tween:Tween = new Tween(popupPieces, fadeUpPopup); 
-			tween.fadeTo(1); 
-			var tween2:Tween = new Tween(pop4,fadeUpPopup); 
-			tween2.fadeTo(1); 
-			Starling.juggler.add(tween);
-			Starling.juggler.add(tween2); 
-			back = false; 
+			fadeInPopup(pop4); 
 			p4 = true; 
 		}	
 		public function popup5(e:Event):void{
-			trace("5"); 
-			resetTimeout(); 
 			swapChildren(popups, btns); 
-			var tween:Tween = new Tween(popupPieces, fadeUpPopup); 
-			tween.fadeTo(1); 
-			var tween2:Tween = new Tween(pop5,fadeUpPopup); 
-			tween2.fadeTo(1); 
-			Starling.juggler.add(tween);
-			Starling.juggler.add(tween2); 
-			back = false; 
+			fadeInPopup(pop5); 
 			p5 = true; 
 
 		}	
 		public function popup6(e:Event):void{
-			trace("6"); 
-			resetTimeout(); 
 			swapChildren(popups, btns); 
-			var tween:Tween = new Tween(popupPieces, fadeUpPopup); 
-			tween.fadeTo(1); 
-			var tween2:Tween = new Tween(pop6,fadeUpPopup); 
-			tween2.fadeTo(1); 
-			Starling.juggler.add(tween);
-			Starling.juggler.add(tween2); 
-			back = false; 
+			fadeInPopup(pop6); 
 			p6 = true; 
 
 		}	
 		
 		public function popup7(e:Event):void{
-			trace("7"); 
-			resetTimeout(); 
 			swapChildren(popups, btns); 
-			var tween:Tween = new Tween(popupPieces, fadeUpPopup); 
-			tween.fadeTo(1); 
-			var tween2:Tween = new Tween(pop7,fadeUpPopup); 
-			tween2.fadeTo(1); 
-			Starling.juggler.add(tween);
-			Starling.juggler.add(tween2); 
-			back = false; 
+			fadeInPopup(pop7); 
 			p7 = true; 
  
 		}		

@@ -1,7 +1,7 @@
 package
 {
-	import flash.display.Bitmap;
-	
+	import starling.animation.Tween;
+	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.textures.Texture;
@@ -29,7 +29,8 @@ package
 		private var enTexture:Texture; 
 		private var enImage; 
 		
-
+		private var fadeTime = 0.5; 
+		
 		public var lang:String; 
 		
 		public function HG01()
@@ -75,23 +76,48 @@ package
 			lang = lang_; 
 			if(lang == "en")
 			{
-				enImage.alpha = 1; 
-				tcImage.alpha = 0 ;
-				scImage.alpha = 0; 
+				var tweenEn:Tween = new Tween(enImage, fadeTime); 
+				tweenEn.fadeTo(1); 
+				Starling.juggler.add(tweenEn); 
+					
+				var tweenSc:Tween = new Tween(scImage, fadeTime); 
+				tweenSc.fadeTo(0); 
+				Starling.juggler.add(tweenSc); 
+				
+				var tweenTc:Tween = new Tween(tcImage, fadeTime); 
+				tweenTc.fadeTo(0); 
+				Starling.juggler.add(tweenTc); 
+	
 			}
 			
 			if(lang == "tc")
 			{
-				enImage.alpha = 0; 
-				tcImage.alpha = 1 ;
-				scImage.alpha = 0; 
+				var tweenEn:Tween = new Tween(enImage, fadeTime); 
+				tweenEn.fadeTo(0); 
+				Starling.juggler.add(tweenEn); 
+				
+				var tweenSc:Tween = new Tween(scImage, fadeTime); 
+				tweenSc.fadeTo(0); 
+				Starling.juggler.add(tweenSc); 
+				
+				var tweenTc:Tween = new Tween(tcImage, fadeTime); 
+				tweenTc.fadeTo(1); 
+				Starling.juggler.add(tweenTc); 
 			}
 			
 			if(lang == "sc")
 			{
-				enImage.alpha = 0; 
-				tcImage.alpha = 0 ;
-				scImage.alpha = 1; 
+				var tweenEn:Tween = new Tween(enImage, fadeTime); 
+				tweenEn.fadeTo(0); 
+				Starling.juggler.add(tweenEn); 
+				
+				var tweenSc:Tween = new Tween(scImage, fadeTime); 
+				tweenSc.fadeTo(1); 
+				Starling.juggler.add(tweenSc); 
+				
+				var tweenTc:Tween = new Tween(tcImage, fadeTime); 
+				tweenTc.fadeTo(0); 
+				Starling.juggler.add(tweenTc); 
 			}
 		}
 		
