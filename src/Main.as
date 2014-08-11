@@ -1,28 +1,17 @@
 
 package{
+	import flash.desktop.NativeApplication;
 	import flash.display.Bitmap;
-	import flash.display.DisplayObject;
-	import flash.display.Screen;
-	import flash.display.SpreadMethod;
 	import flash.events.TimerEvent;
-	import flash.geom.Rectangle;
-	import flash.net.dns.AAAARecord;
-	import flash.sampler.startSampling;
-	import flash.system.ImageDecodingPolicy;
 	import flash.utils.Timer;
 	
 	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Button;
-	import starling.display.DisplayObject;
 	import starling.display.Image;
-	import starling.display.MovieClip;
 	import starling.display.Sprite;
-	import starling.display.Stage;
 	import starling.events.Event;
-	import starling.events.Touch;
-	import starling.events.TouchEvent;
-	import starling.events.TouchPhase;
+	import starling.events.KeyboardEvent;
 	import starling.textures.Texture;
 
 	public class Main extends starling.display.Sprite{
@@ -370,9 +359,18 @@ package{
 			popupPieces.getChildByName("tcBtn").alpha = 0;
 			popupPieces.getChildByName("enBtn").alpha = 0;
 			popupPieces.getChildByName("enBtn2").alpha = 0;
-			
+			addEventListener(starling.events.KeyboardEvent.KEY_DOWN, quitOut);
 		}
-	
+		
+		private function quitOut(e:starling.events.KeyboardEvent):void
+		{
+			//trace(e.keyCode); 
+			if(e.keyCode == 27)
+			{
+				NativeApplication.nativeApplication.exit(0);
+			}
+		}
+		
 		private function checkForUser (e:TimerEvent):void
 		{
 			//reset lang to English  
