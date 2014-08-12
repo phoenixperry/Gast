@@ -3,6 +3,7 @@ package{
 	import flash.desktop.NativeApplication;
 	import flash.display.Bitmap;
 	import flash.events.TimerEvent;
+	import flash.ui.Mouse;
 	import flash.utils.Timer;
 	
 	import starling.animation.Tween;
@@ -12,13 +13,17 @@ package{
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.KeyboardEvent;
+	import starling.text.TextField;
 	import starling.textures.Texture;
 
 	public class Main extends starling.display.Sprite{
 		
 		//reset timer 
 		private var timeOut:Timer; 
-		private var timeBeforeReset = 10000; 
+		private var timeBeforeReset = 120000; 
+		//debug timer
+		//private var timeBeforeReset = 10000; 
+
 		// var to change languages. Default to english
 		private var lang:String = "en"; 
 	 	
@@ -69,7 +74,6 @@ package{
 		//data collection of all btns 
 		public var allBtns:Vector.<Button>; 
 		//popup background 
-		
 		[Embed(source="./assets/popup.png")]
 		private var popupBit:Class; 
 		private var popupTexture:Texture; 
@@ -95,6 +99,10 @@ package{
 		private var tcBit:Class; 
 		private var tcBtnTexture:Texture; 
 		private var tcBtn:Button;
+		
+		//font
+		[Embed(source="minion.otf", embedAsCFF="false", fontFamily="minion")]
+		private static const Minion:Class;
 		
 		//repositioned popup btns 
 		private var tcBtn2:Button; 
@@ -132,6 +140,8 @@ package{
 
 		public function Main()
 		{
+			Mouse.hide();
+			
 			addEventListener(starling.events.Event.ADDED_TO_STAGE, Init); 
 		}
 		
@@ -360,6 +370,14 @@ package{
 			popupPieces.getChildByName("enBtn").alpha = 0;
 			popupPieces.getChildByName("enBtn2").alpha = 0;
 			addEventListener(starling.events.KeyboardEvent.KEY_DOWN, quitOut);
+			//add btn text 
+			var textField:TextField = 
+				new TextField(239, 40, "Change Language:", "Minion", 29, 0x4a3a20);
+			textField.x =656; 
+			textField.y =788;
+			popupPieces.addChild(textField); 
+			
+	
 		}
 		
 		private function quitOut(e:starling.events.KeyboardEvent):void

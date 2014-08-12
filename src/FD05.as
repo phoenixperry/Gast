@@ -46,22 +46,22 @@ package
 			var scBitmap = new scBit(); 
 			scTexture = Texture.fromBitmap(scBitmap); 
 			scImage = new Image(scTexture); 
-			scImage.x = 665; 
-			scImage.y = 256; 
+			scImage.x = 666; 
+			scImage.y = 321; 
 			addChild(scImage); 
 			
 			var tcBitmap = new tcBit(); 
 			tcTexture = Texture.fromBitmap(tcBitmap); 
 			tcImage = new Image(tcTexture); 
-			tcImage.x = 665; 
-			tcImage.y = 256; 
+			tcImage.x = 666; 
+			tcImage.y = 321; 
 			addChild(tcImage); 
 			
 			var enBitmap = new enBit(); 
 			enTexture = Texture.fromBitmap(enBitmap); 
 			enImage = new Image(enTexture); 
-			enImage.x = 665; 
-			enImage.y = 256; 
+			enImage.x = 666; 
+			enImage.y = 316; 
 			addChild(enImage);
 			setLang("en"); 
 			
