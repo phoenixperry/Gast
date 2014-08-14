@@ -1,5 +1,7 @@
 
 package{
+
+	
 	import flash.desktop.NativeApplication;
 	import flash.display.Bitmap;
 	import flash.events.TimerEvent;
@@ -13,16 +15,24 @@ package{
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.KeyboardEvent;
+	import starling.filters.ColorMatrixFilter;
 	import starling.text.TextField;
 	import starling.textures.Texture;
+	import starling.utils.Color;
 
 	public class Main extends starling.display.Sprite{
 		
+		//tint values 
+		private var tintUp:Boolean; 
+		private var tintDown:Boolean; 
+		private var tintVal:Number; 
+		private var tintBlack:ColorMatrixFilter; 
+		
 		//reset timer 
 		private var timeOut:Timer; 
-		private var timeBeforeReset = 120000; 
+		//private var timeBeforeReset = 120000; 
 		//debug timer
-		//private var timeBeforeReset = 10000; 
+		private var timeBeforeReset:Number = 5000; 
 
 		// var to change languages. Default to english
 		private var lang:String = "en"; 
@@ -32,8 +42,11 @@ package{
 		private var bgBit:Class; 
 		private var bgTexture:Texture; 
 		private var bgImage:Image; 
+		private var blackImages:Sprite; 
 		
 		//photo btns 
+
+		
 		[Embed(source="./assets/01hg_btn.png")]
 		private var btn01bit:Class; 
 		private var btn01Texture:Texture; 
@@ -140,7 +153,7 @@ package{
 
 		public function Main()
 		{
-			Mouse.hide();
+			//Mouse.hide();
 			
 			addEventListener(starling.events.Event.ADDED_TO_STAGE, Init); 
 		}
@@ -148,7 +161,7 @@ package{
 		private function Init(e:starling.events.Event):void{
 			//add global listener for buttons 
 			removeEventListener(starling.events.Event.ADDED_TO_STAGE, Init); 
-		
+	
 			btns = new Sprite(); 
 			btns.width = stage.stageWidth; 
 			btns.height = stage.height; 
@@ -342,7 +355,9 @@ package{
 			btns.addChild(btn07);
 			btns.name = "btns"; 
 			//adding the collection 
+			
 			addChildAt(btns,2);
+			
 			allBtns = new Vector.<Button>(); 
 			allBtns.push(btn01); 
 			allBtns.push(btn02); 
@@ -358,6 +373,22 @@ package{
 			timeOut.addEventListener(TimerEvent.TIMER, checkForUser); 
 			addEventListener(Event.ENTER_FRAME, OnEnterFrame); 
 			
+			setDefaultBtns(); 
+			addEventListener(starling.events.KeyboardEvent.KEY_DOWN, quitOut);
+			//add btn text 
+			var textField:TextField = 
+				new TextField(239, 40, "Change Language:", "Minion", 29, 0x4a3a20);
+			textField.x =656; 
+			textField.y =788;
+			popupPieces.addChild(textField); 
+			
+			//set up tint 
+			tintBlack = new ColorMatrixFilter(); 
+	
+		}
+		
+		private function setDefaultBtns():void
+		{
 			//set up english btns as the default
 			popupPieces.setChildIndex(popupPieces.getChildByName("scBtn"), popupPieces.numChildren-1); 
 			popupPieces.setChildIndex(popupPieces.getChildByName("tcBtn2"), popupPieces.numChildren-1);
@@ -368,16 +399,11 @@ package{
 			popupPieces.getChildByName("scBtn2").alpha = 0;
 			popupPieces.getChildByName("tcBtn").alpha = 0;
 			popupPieces.getChildByName("enBtn").alpha = 0;
-			popupPieces.getChildByName("enBtn2").alpha = 0;
-			addEventListener(starling.events.KeyboardEvent.KEY_DOWN, quitOut);
-			//add btn text 
-			var textField:TextField = 
-				new TextField(239, 40, "Change Language:", "Minion", 29, 0x4a3a20);
-			textField.x =656; 
-			textField.y =788;
-			popupPieces.addChild(textField); 
+			popupPieces.getChildByName("enBtn2").alpha = 0;	
 			
-	
+			// turn up default btns 
+			popupPieces.getChildByName("tcBtn2").alpha = 1; 
+			popupPieces.getChildByName("scBtn").alpha = 1;
 		}
 		
 		private function quitOut(e:starling.events.KeyboardEvent):void
@@ -389,12 +415,15 @@ package{
 			}
 		}
 		
+		//function for resetting the application to the default state if there is no activity
 		private function checkForUser (e:TimerEvent):void
 		{
 			//reset lang to English  
 			changeLang("en"); 
-		
 			home = true; 
+			en = true; 
+			tc = false; 
+			sc = false; 
 			
 			
 		}
@@ -569,11 +598,18 @@ package{
 				fadeOutPopup(pop7);  
 				p7 = false; 
 			}
+			if(tintDown)
+			{
+			
+			}
+			if(tintUp)
+			{
+				
+			}
 		}
 		private function fadeOutPopup(pop:Sprite):void
 		{
 			changeBtnState(true); 
-			home = false; 
 			back = false; 
 			var tween:Tween = new Tween(popupPieces,fadeDownPopup); 
 			tween.fadeTo(0); 
@@ -586,13 +622,24 @@ package{
 				swapChildren(popups, btns); 
 				trace("finished tween", getChildAt(0).name, getChildAt(1).name, getChildAt(2).name); 
 			}
+			//if the pop up is actually resetting to default, make sure to reset buttons + home trigger as well
+			tween2.onComplete = function():void
+			{
+				if(home)
+				{
+					setDefaultBtns(); 
+					home = false; 
+				}
+			}
 			//fade up background and btns 
 			var tweenbg:Tween = new Tween(bgImage, fadeBackground); 
 			tweenbg.fadeTo(1);  
 			Starling.juggler.add(tweenbg); 
-			var tweenbgBtns = new Tween(btns, fadeBackground); 
-			tweenbgBtns.fadeTo(1); 
-			Starling.juggler.add(tweenbgBtns); 
+			//var tweenbgBtns2:Tween = new Tween(btns, fadeBackground); 
+			//tweenbgBtns2.fadeTo(1); 
+			//Starling.juggler.add(tweenbgBtns2); 
+			tintUp = true; 
+			tintDown = false; 
 		}
 		private function backBtnClicked(e:Event):void
 		{
@@ -606,7 +653,7 @@ package{
 			for each (var button:Button in allBtns) 
 			{
 				button.enabled = b;
-				trace(button.name, button.enabled); 
+				//trace(button.name, button.enabled); 
 			}
 		}
 		public function fadeInPopup(pop:Sprite):void{
@@ -616,12 +663,10 @@ package{
 			var tweenbg:Tween = new Tween(bgImage, fadeBackground); 
 			tweenbg.fadeTo(.70); 
 			Starling.juggler.add(tweenbg); 
-			var tweenbgBtns:Tween = new Tween(btns, fadeBackground); 
-		
+			//var tweenbgBtns:Tween = new Tween(btns, fadeBackground); 
 			
-			tweenbgBtns.fadeTo(.70); 
-			Starling.juggler.add(tweenbgBtns); 
-			
+			//tweenbgBtns.fadeTo(.70); 
+			//Starling.juggler.add(tweenbgBtns); 
 			//fade up popup pieces 
 			var tweenpp:Tween = new Tween(popupPieces, fadeUpPopup); 
 			tweenpp.fadeTo(1); 
@@ -630,7 +675,8 @@ package{
 			Starling.juggler.add(tweenpp);
 			Starling.juggler.add(tweenpop); 
 			back = false; 
-			
+			tintDown = false; 
+			tintUp = true; 
 		}
 		public function popup1(e:Event):void{
 			swapChildren(popups, btns); 
@@ -682,9 +728,11 @@ package{
 			pop6.setLang(s); 
 			pop7.setLang(s); 
 		}
-
 		
-	
-		
+		public const lerp:Function = function( amount:Number , start:Number, end:Number ):Number 
+		{ 
+			tintVal = (1-amount) * start + (amount) * end;
+			return tintVal; 
+		}		
 	}
 }

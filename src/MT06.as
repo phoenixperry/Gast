@@ -1,5 +1,7 @@
 package
 {
+	import flash.display.Bitmap;
+	
 	import starling.animation.Tween;
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -43,21 +45,21 @@ package
 			photoImage.y = 263; 
 			addChild(photoImage); 
 			
-			var scBitmap = new scBit(); 
+			var scBitmap:Bitmap = new scBit(); 
 			scTexture = Texture.fromBitmap(scBitmap); 
 			scImage = new Image(scTexture); 
 			scImage.x = 666; 
 			scImage.y = 301; 
 			addChild(scImage); 
 			
-			var tcBitmap = new tcBit(); 
+			var tcBitmap:Bitmap = new tcBit(); 
 			tcTexture = Texture.fromBitmap(tcBitmap); 
 			tcImage = new Image(tcTexture); 
 			tcImage.x = 666; 
 			tcImage.y = 301; 
 			addChild(tcImage); 
 			
-			var enBitmap = new enBit(); 
+			var enBitmap:Bitmap = new enBit(); 
 			enTexture = Texture.fromBitmap(enBitmap); 
 			enImage = new Image(enTexture); 
 			enImage.x = 666; 

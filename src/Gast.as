@@ -47,7 +47,7 @@ package
 			stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;		
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align= StageAlign.TOP_LEFT; 	
-			//stage.align = "";
+			stage.align = "";
 		}
 	}
 }
