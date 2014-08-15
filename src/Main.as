@@ -12,6 +12,7 @@ package{
 	import starling.core.Starling;
 	import starling.display.Button;
 	import starling.display.Image;
+	import starling.display.Quad;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.KeyboardEvent;
@@ -27,7 +28,7 @@ package{
 		private var tintDown:Boolean; 
 		private var tintVal:Number; 
 		private var tintBlack:ColorMatrixFilter; 
-		
+		private var q:Quad; 
 		//reset timer 
 		private var timeOut:Timer; 
 		//private var timeBeforeReset = 120000; 
@@ -96,31 +97,31 @@ package{
 		[Embed(source="./assets/back.png")] 
 		private var backBit:Class; 
 		private var backTexture:Texture; 
-		private var backBtn:Button; 
+		private var backBtn:starling.display.Button; 
 		
 		[Embed(source="./assets/btnEn.png")]
 		private var enBit:Class; 
 		private var enBtnTexture:Texture; 
-		private var enBtn:Button;
+		private var enBtn:starling.display.Button;
 		
 		[Embed(source="./assets/btnSimpleChinese.png")]
 		private var scBit:Class; 
 		private var scBtnTexture:Texture; 
-		private var scBtn:Button;
+		private var scBtn:starling.display.Button;
 		
 		[Embed(source="./assets/btnTraditionalChinese.png")]
 		private var tcBit:Class; 
 		private var tcBtnTexture:Texture; 
-		private var tcBtn:Button;
+		private var tcBtn:starling.display.Button;
 		
 		//font
 		[Embed(source="minion.otf", embedAsCFF="false", fontFamily="minion")]
 		private static const Minion:Class;
 		
 		//repositioned popup btns 
-		private var tcBtn2:Button; 
-		private var scBtn2:Button; 
-		private var enBtn2:Button; 
+		private var tcBtn2:starling.display.Button; 
+		private var scBtn2:starling.display.Button; 
+		private var enBtn2:starling.display.Button; 
 		
 		//collection of all the elements in every popup (btns + background) 
 		private var popupPieces:Sprite;
@@ -209,7 +210,7 @@ package{
 	
 			var backBitmap:Bitmap = new backBit(); 
 			backTexture = Texture.fromBitmap(backBitmap); 
-			backBtn = new Button(backTexture,"",backTexture); 
+			backBtn = new starling.display.Button(backTexture,"",backTexture); 
 			backBtn.addEventListener(Event.TRIGGERED, backBtnClicked);
 			backBtn.x = 1588; 
 			backBtn.y = 753;
@@ -219,8 +220,8 @@ package{
 			
 			var enBitmap:Bitmap = new enBit(); 
 			enBtnTexture = Texture.fromBitmap(enBitmap); 
-			enBtn = new Button(enBtnTexture,"",enBtnTexture);
-			enBtn2 = new Button(enBtnTexture, "", enBtnTexture); 
+			enBtn = new starling.display.Button(enBtnTexture,"",enBtnTexture);
+			enBtn2 = new starling.display.Button(enBtnTexture, "", enBtnTexture); 
 			enBtn.addEventListener(Event.TRIGGERED, enBtnClicked);
 			enBtn2.addEventListener(Event.TRIGGERED, enBtnClicked);
 			//enBtn.alpha =0; 
@@ -344,7 +345,6 @@ package{
 			btn06.name = "btn06";
 			btn06.addEventListener(Event.TRIGGERED, popup6);
 			btns.addChild(btn06);
-			
 			var btn07Bitmap:Bitmap = new btn07Bit();
 			btn07Texture = Texture.fromBitmap(btn07Bitmap); 
 			btn07 = new Button(btn07Texture, "", btn07Texture); 
@@ -384,7 +384,11 @@ package{
 			
 			//set up tint 
 			tintBlack = new ColorMatrixFilter(); 
-	
+			q = new Quad(stage.stageWidth, stage.stageHeight, 0x000000);
+			q.name = "q"; 
+			btns.addChild(q); 
+			q.alpha = 0; 
+			q.touchable = false; 
 		}
 		
 		private function setDefaultBtns():void
@@ -598,14 +602,7 @@ package{
 				fadeOutPopup(pop7);  
 				p7 = false; 
 			}
-			if(tintDown)
-			{
-			
-			}
-			if(tintUp)
-			{
-				
-			}
+	
 		}
 		private function fadeOutPopup(pop:Sprite):void
 		{
@@ -632,12 +629,19 @@ package{
 				}
 			}
 			//fade up background and btns 
-			var tweenbg:Tween = new Tween(bgImage, fadeBackground); 
-			tweenbg.fadeTo(1);  
-			Starling.juggler.add(tweenbg); 
-			//var tweenbgBtns2:Tween = new Tween(btns, fadeBackground); 
-			//tweenbgBtns2.fadeTo(1); 
-			//Starling.juggler.add(tweenbgBtns2); 
+//			var tweenbg:Tween = new Tween(bgImage, fadeBackground); 
+//			tweenbg.fadeTo(1);  
+//			Starling.juggler.add(tweenbg); 
+			var obj:Quad = btns.getChildByName("q") as Quad; 
+			var postion:Number = btns.getChildIndex(obj) 
+			obj.alpha =0;
+			var quadTween:Tween = new Tween(obj, fadeBackground); 
+			quadTween.fadeTo(0); 
+			quadTween.onComplete= function(){
+				trace(obj.alpha + " Alpha at end of tween");
+			}
+				
+			Starling.juggler.add(quadTween); 
 			tintUp = true; 
 			tintDown = false; 
 		}
@@ -660,13 +664,16 @@ package{
 			resetTimeout(); 
 			changeBtnState(false); 
 			//fade down background and btns 
-			var tweenbg:Tween = new Tween(bgImage, fadeBackground); 
-			tweenbg.fadeTo(.70); 
-			Starling.juggler.add(tweenbg); 
-			//var tweenbgBtns:Tween = new Tween(btns, fadeBackground); 
+//			var tweenbg:Tween = new Tween(bgImage, fadeBackground); 
+//			tweenbg.fadeTo(.70); 
+//			Starling.juggler.add(tweenbg); 
 			
-			//tweenbgBtns.fadeTo(.70); 
-			//Starling.juggler.add(tweenbgBtns); 
+			
+			var obj:Quad = getChildByName("q") as Quad;  
+			trace(btns.getChildByName("q"));
+			var tweenQuadA:Tween = new Tween(btns.getChildByName("q"), fadeBackground); 
+			tweenQuadA.fadeTo(.3); 
+			Starling.juggler.add(tweenQuadA); 
 			//fade up popup pieces 
 			var tweenpp:Tween = new Tween(popupPieces, fadeUpPopup); 
 			tweenpp.fadeTo(1); 
@@ -677,6 +684,8 @@ package{
 			back = false; 
 			tintDown = false; 
 			tintUp = true; 
+			trace(btn06.alpha + "i think the alpha");
+			
 		}
 		public function popup1(e:Event):void{
 			swapChildren(popups, btns); 
@@ -731,8 +740,8 @@ package{
 		
 		public const lerp:Function = function( amount:Number , start:Number, end:Number ):Number 
 		{ 
-			tintVal = (1-amount) * start + (amount) * end;
-			return tintVal; 
+			//tintVal = (1-amount) * start + (amount) * end;
+			//return tintVal; 
 		}		
 	}
 }
