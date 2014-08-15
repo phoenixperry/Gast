@@ -25,11 +25,7 @@ package{
 
 	public class Main extends starling.display.Sprite{
 		
-		//tint values 
-		private var tintUp:Boolean; 
-		private var tintDown:Boolean; 
-		private var tintVal:Number; 
-		private var tintBlack:ColorMatrixFilter; 
+		//tint quad 
 		private var q:Quad; 
 		
 		//reset timer 
@@ -429,7 +425,7 @@ package{
 			
 			
 		}
-
+		//flips the order of the btns and the popup 
 		private function swapButtons(btn1:Button, btn2:Button,btn3:Button, btn4:Button ):void
 		{
 			var tween:Tween = new Tween(btn1, fadeDownPopup); 
@@ -512,7 +508,7 @@ package{
 			changeLang("en"); 
 			
 		}
-		
+		//resets the timer if the user interacts 
 		private function resetTimeout():void
 		{
 			timeOut.reset(); 
@@ -522,7 +518,7 @@ package{
 		
 		private function OnEnterFrame():void
 		{
-			//main driving state machine -- do some refractoring here 
+			//main driving state machine --  
 			if(p1 && back)
 			{
 				fadeOutPopup(pop1); 
@@ -629,8 +625,6 @@ package{
 		
 			TweenLite.to(btns.getChildByName("q"), fadeDownPopup , {alpha:0});
 
-			tintUp = true; 
-			tintDown = false; 
 		}
 		private function backBtnClicked(e:Event):void
 		{
@@ -655,8 +649,6 @@ package{
 			TweenLite.to(popupPieces, fadeUpPopup , {alpha:1});
 			TweenLite.to(pop, fadeUpPopup , {alpha:1});
 			back = false; 
-			tintDown = false; 
-			tintUp = true; 
 			
 		}
 		public function popup1(e:Event):void{
@@ -710,11 +702,6 @@ package{
 			pop7.setLang(s); 
 		}
 		
-		public const lerp:Function = function( amount:Number , start:Number, end:Number ):Number 
-		{ 
-//			tintVal = (1-amount) * start + (amount) * end;
-//			trace(tintVal)
-//			return tintVal; 
-		}		
+	
 	}
 }
