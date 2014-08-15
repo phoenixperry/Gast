@@ -2,6 +2,8 @@
 package{
 
 	
+	import com.greensock.TweenLite;
+	
 	import flash.desktop.NativeApplication;
 	import flash.display.Bitmap;
 	import flash.events.TimerEvent;
@@ -29,6 +31,7 @@ package{
 		private var tintVal:Number; 
 		private var tintBlack:ColorMatrixFilter; 
 		private var q:Quad; 
+		
 		//reset timer 
 		private var timeOut:Timer; 
 		//private var timeBeforeReset = 120000; 
@@ -193,18 +196,15 @@ package{
 			pop6.name = "pop6"; 
 			pop7 = new AY07(); 
 			pop7.name = "pop7"; 
-			//popups = new Vector.<Sprite>([pop1, pop2, pop3, pop4, pop5, pop6, pop7]); 
-			//putting all popups in container.
 			popups = new Sprite(); 
 
-			//add all of the popup btns and the popup background set to an alpha of 0 to start 
+			//add all of the popup btns and the popup background 
 			popupPieces = new Sprite();
 			var popupBitmap = new popupBit(); 
 			popupTexture = Texture.fromBitmap(popupBitmap); 
 			popupImage = new Image(popupTexture); 
 			popupImage.x = 139; 
 			popupImage.y =62; 
-			//popupImage.alpha = 0; 
 			popupImage.name = "popupBg"; 
 			popupPieces.addChildAt(popupImage,0);
 	
@@ -214,7 +214,6 @@ package{
 			backBtn.addEventListener(Event.TRIGGERED, backBtnClicked);
 			backBtn.x = 1588; 
 			backBtn.y = 753;
-			//backBtn.alpha = 0; 
 			backBtn.name = "backBtn"; 
 			popupPieces.addChildAt(backBtn,1);
 			
@@ -224,7 +223,6 @@ package{
 			enBtn2 = new starling.display.Button(enBtnTexture, "", enBtnTexture); 
 			enBtn.addEventListener(Event.TRIGGERED, enBtnClicked);
 			enBtn2.addEventListener(Event.TRIGGERED, enBtnClicked);
-			//enBtn.alpha =0; 
 			enBtn.x = 905; 
 			enBtn.y = 776; 
 			enBtn2.x = 1117; 
@@ -628,20 +626,9 @@ package{
 					home = false; 
 				}
 			}
-			//fade up background and btns 
-//			var tweenbg:Tween = new Tween(bgImage, fadeBackground); 
-//			tweenbg.fadeTo(1);  
-//			Starling.juggler.add(tweenbg); 
-			var obj:Quad = btns.getChildByName("q") as Quad; 
-			var postion:Number = btns.getChildIndex(obj) 
-			obj.alpha =0;
-			var quadTween:Tween = new Tween(obj, fadeBackground); 
-			quadTween.fadeTo(0); 
-			quadTween.onComplete= function(){
-				trace(obj.alpha + " Alpha at end of tween");
-			}
-				
-			Starling.juggler.add(quadTween); 
+		
+			TweenLite.to(btns.getChildByName("q"), fadeDownPopup , {alpha:0});
+
 			tintUp = true; 
 			tintDown = false; 
 		}
@@ -663,28 +650,13 @@ package{
 		public function fadeInPopup(pop:Sprite):void{
 			resetTimeout(); 
 			changeBtnState(false); 
-			//fade down background and btns 
-//			var tweenbg:Tween = new Tween(bgImage, fadeBackground); 
-//			tweenbg.fadeTo(.70); 
-//			Starling.juggler.add(tweenbg); 
-			
-			
-			var obj:Quad = getChildByName("q") as Quad;  
-			trace(btns.getChildByName("q"));
-			var tweenQuadA:Tween = new Tween(btns.getChildByName("q"), fadeBackground); 
-			tweenQuadA.fadeTo(.3); 
-			Starling.juggler.add(tweenQuadA); 
+			TweenLite.to(btns.getChildByName("q"), fadeDownPopup , {alpha:.3});
 			//fade up popup pieces 
-			var tweenpp:Tween = new Tween(popupPieces, fadeUpPopup); 
-			tweenpp.fadeTo(1); 
-			var tweenpop:Tween = new Tween(pop,fadeUpPopup); 
-			tweenpop.fadeTo(1); 
-			Starling.juggler.add(tweenpp);
-			Starling.juggler.add(tweenpop); 
+			TweenLite.to(popupPieces, fadeUpPopup , {alpha:1});
+			TweenLite.to(pop, fadeUpPopup , {alpha:1});
 			back = false; 
 			tintDown = false; 
 			tintUp = true; 
-			trace(btn06.alpha + "i think the alpha");
 			
 		}
 		public function popup1(e:Event):void{
@@ -740,8 +712,9 @@ package{
 		
 		public const lerp:Function = function( amount:Number , start:Number, end:Number ):Number 
 		{ 
-			//tintVal = (1-amount) * start + (amount) * end;
-			//return tintVal; 
+//			tintVal = (1-amount) * start + (amount) * end;
+//			trace(tintVal)
+//			return tintVal; 
 		}		
 	}
 }
