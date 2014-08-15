@@ -618,41 +618,28 @@ package{
 			tween2.onComplete = function():void
 			{
 				if(home)
-				{
 					setDefaultBtns(); 
 					home = false; 
 				}
 			}
 		
 			TweenLite.to(q, fadeDownPopup , {alpha:0});
+			
+		}
 
-		}
-		private function backBtnClicked(e:Event):void
-		{
-			timeOut.reset(); 
-			timeOut.start(); 
-			back = true;	
-		}
-		public function changeBtnState(b:Boolean):void
-		{
-			trace(allBtns.length); 
-			for each (var button:Button in allBtns) 
-			{
-				button.enabled = b;
-				//trace(button.name, button.enabled); 
-			}
-		}
 		public function fadeInPopup(pop:Sprite):void{
 			resetTimeout(); 
 			changeBtnState(false); 
+			trace(btns.alpha+ "I am the btns alpha"); 
+			
 			TweenLite.to(q, fadeDownPopup , {alpha:.3});
 			//fade up popup pieces 
 			TweenLite.to(popupPieces, fadeUpPopup , {alpha:1});
 			TweenLite.to(pop, fadeUpPopup , {alpha:1});
 			back = false; 
-			
 		}
 		public function popup1(e:Event):void{
+			trace(btns.alpha+ "I am the btns alpha"); 
 			swapChildren(popups, btns); 
 			fadeInPopup(pop1); 
 			p1 = true; 
@@ -691,7 +678,22 @@ package{
 			p7 = true; 
  
 		}		
-		
+		private function backBtnClicked(e:Event):void
+		{
+			timeOut.reset(); 
+			timeOut.start(); 
+			back = true;	
+		}
+		//disables the buttons when needed
+		public function changeBtnState(b:Boolean):void
+		{
+			trace(allBtns.length); 
+			for each (var button:Button in allBtns) 
+			{
+				button.enabled = b;
+				//trace(button.name, button.enabled); 
+			}
+		}
 		public function changeLang(s:String):void 
 		{
 			pop1.setLang(s); 
