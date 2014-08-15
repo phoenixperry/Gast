@@ -625,7 +625,7 @@ package{
 			}
 		
 			TweenLite.to(q, fadeDownPopup , {alpha:0});
-			
+			changeBtnState(true); 	
 		}
 
 		public function fadeInPopup(pop:Sprite):void{
@@ -683,14 +683,10 @@ package{
 			timeOut.start(); 
 			back = true;	
 		}
+		//flips photo btns on and off
 		public function changeBtnState(b:Boolean):void
 		{
-			trace(allBtns.length); 
-			for each (var button:Button in btns) 
-			{
-				button.enabled = b;
-				//trace(button.name, button.enabled); 
-			}
+			btns.touchable = b; 
 		}
 		public function changeLang(s:String):void 
 		{
