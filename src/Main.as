@@ -377,7 +377,6 @@ package{
 			popupPieces.addChild(textField); 
 			
 			//set up tint 
-			tintBlack = new ColorMatrixFilter(); 
 			q = new Quad(stage.stageWidth, stage.stageHeight, 0x000000);
 			q.name = "q"; 
 			btns.addChild(q); 
@@ -388,20 +387,20 @@ package{
 		private function setDefaultBtns():void
 		{
 			//set up english btns as the default
-			popupPieces.setChildIndex(popupPieces.getChildByName("scBtn"), popupPieces.numChildren-1); 
-			popupPieces.setChildIndex(popupPieces.getChildByName("tcBtn2"), popupPieces.numChildren-1);
+			popupPieces.setChildIndex(scBtn, popupPieces.numChildren-1); 
+			popupPieces.setChildIndex(tcBtn2, popupPieces.numChildren-1);
 			sc = false; 
 			tc = false; 
 			en = true;
 			//turn down alpha on all non-visible buttons 
-			popupPieces.getChildByName("scBtn2").alpha = 0;
-			popupPieces.getChildByName("tcBtn").alpha = 0;
-			popupPieces.getChildByName("enBtn").alpha = 0;
-			popupPieces.getChildByName("enBtn2").alpha = 0;	
+			scBtn2.alpha = 0;
+			tcBtn.alpha = 0;
+			enBtn.alpha = 0;
+			enBtn2.alpha = 0;	
 			
 			// turn up default btns 
-			popupPieces.getChildByName("tcBtn2").alpha = 1; 
-			popupPieces.getChildByName("scBtn").alpha = 1;
+			tcBtn2.alpha = 1; 
+			scBtn.alpha = 1;
 		}
 		
 		private function quitOut(e:starling.events.KeyboardEvent):void
@@ -425,9 +424,11 @@ package{
 			
 			
 		}
-		//flips the order of the btns and the popup 
+		//flips the order of the language buttons to show the right languages in the popups 
+		//based on user selection
 		private function swapButtons(btn1:Button, btn2:Button,btn3:Button, btn4:Button ):void
 		{
+			//fades down the language buttons.
 			var tween:Tween = new Tween(btn1, fadeDownPopup); 
 			tween.fadeTo(0); 
 			Starling.juggler.add(tween); 
@@ -444,8 +445,8 @@ package{
 			tween4.fadeTo(1); 
 			Starling.juggler.add(tween4); 
 			
-			popupPieces.setChildIndex(popupPieces.getChildByName(btn3.name),popupPieces.numChildren-1); 
-			popupPieces.setChildIndex(popupPieces.getChildByName(btn4.name),popupPieces.numChildren-1); 
+			popupPieces.setChildIndex(btn3,popupPieces.numChildren-1); 
+			popupPieces.setChildIndex(btn4,popupPieces.numChildren-1); 
 			
 			
 		}
@@ -623,7 +624,7 @@ package{
 				}
 			}
 		
-			TweenLite.to(btns.getChildByName("q"), fadeDownPopup , {alpha:0});
+			TweenLite.to(q, fadeDownPopup , {alpha:0});
 
 		}
 		private function backBtnClicked(e:Event):void
@@ -644,7 +645,7 @@ package{
 		public function fadeInPopup(pop:Sprite):void{
 			resetTimeout(); 
 			changeBtnState(false); 
-			TweenLite.to(btns.getChildByName("q"), fadeDownPopup , {alpha:.3});
+			TweenLite.to(q, fadeDownPopup , {alpha:.3});
 			//fade up popup pieces 
 			TweenLite.to(popupPieces, fadeUpPopup , {alpha:1});
 			TweenLite.to(pop, fadeUpPopup , {alpha:1});
