@@ -391,16 +391,19 @@ package{
 			//keyboard event to quit or show and hide mouse
 			addEventListener(starling.events.KeyboardEvent.KEY_DOWN, quitOut);
 						
-			//set up a full screen black tint for behind the open popup. 
+			//set up a full screen black tint for behind the open popup and keep it off for now. 
 			q = new Quad(stage.stageWidth, stage.stageHeight, 0xFF0000);
 			q.name = "q"; 
 			btns.addChild(q); 
 			q.alpha = 0; 
 			//Make it non-interactive. 
 			q.touchable = false; 
-	
+			trace("start order of layers", getChildAt(0).name, getChildAt(1).name, getChildAt(2).name); 
+			trace(p1,p2,p3,p4,p5,p6,p7, back, home, en, sc, tc); 
 		}
 		
+		//sets the default language to english and stacked the btns appropriately. runs if the application 
+		//needs to rest and on startup
 		private function setDefaultBtns():void
 		{
 			//set up english btns as the default
@@ -419,7 +422,7 @@ package{
 			tcBtn2.alpha = 1; 
 			scBtn.alpha = 1;
 		}
-		
+		//keypress behaviors for mouse and quiting
 		private function quitOut(e:starling.events.KeyboardEvent):void
 		{
 			//escape to quit
@@ -442,15 +445,15 @@ package{
 		}
 		
 	
-		//function for resetting the application to the default state if there is no activity
+		//function for resetting the application to the default state if there is no user activity
 		private function checkForUser (e:TimerEvent):void
 		{
 			//reset lang to English  
 			changeLang("en"); 
 			//take the application back to the default starting state			
 			home = true; 
-					
 		}
+		
 		//flips the order of the language buttons to show the right languages in the popups 
 		//based on user selection. Btn 1 and 2 are the current buttons. Btn 3 and 4 are the new buttons
 		private function swapButtons(btn1:Button, btn2:Button,btn3:Button, btn4:Button ):void
@@ -628,7 +631,7 @@ package{
 				fadeOutPopup(pop7);  
 				p7 = false; 
 			}
-			trace(q.alpha); 
+		//	trace(q.alpha); 
 		}
 		
 		private function fadeOutPopup(pop:Sprite):void
@@ -682,7 +685,8 @@ package{
 			TweenLite.to(pop, fadeUpPopup, {alpha:1});
 			//allow the back btn to be triggered if clicked. 
 			back = false; 
-			
+			trace(getChildAt(0).name,getChildAt(1).name, getChildAt(2).name + " layer order when the fadeIn happens"); 
+			trace(p1,p2,p3,p4,p5,p6,p7, back, home, en, sc, tc);
 		}
 		
 		//note popup 1 - 7 are the same. 
