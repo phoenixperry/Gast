@@ -39,7 +39,9 @@ package
 			
 			st.stage.stageWidth = stage.stageWidth;
 			st.stage.stageHeight = stage.stageHeight;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
 			goFullScreen(); 
+			
 			
 		}
 		private function goFullScreen():void

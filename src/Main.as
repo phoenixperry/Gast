@@ -30,7 +30,7 @@ package{
 		
 		//reset timer 
 		private var timeOut:Timer; 
-		//private var timeBeforeReset = 120000; 
+		//private var timeBeforeReset = 90000; 
 		//debug timer
 		private var timeBeforeReset:Number = 5000; 
 
@@ -140,7 +140,7 @@ package{
 		
 		//all transitions 
 		private var fadeDownPopup:Number = .75; 
-		private var fadeUpPopup:Number = .5; 
+		private var fadeUpPopup:Number = .75; 
 		private var fadeChangeLang:Number = .5; 
 		private var fadeBackground:Number = .5; 
 		
@@ -153,7 +153,7 @@ package{
 
 		public function Main()
 		{
-			//Mouse.hide();
+			Mouse.hide();
 			
 			addEventListener(starling.events.Event.ADDED_TO_STAGE, Init); 
 		}
@@ -174,8 +174,6 @@ package{
 			bgImage.name = "bg";
 			//add the background 
 			addChildAt(bgImage,0);
-			
-
 			
 			//create all of the popups 
 			pop1 = new HG01(); 
@@ -410,17 +408,30 @@ package{
 			{
 				NativeApplication.nativeApplication.exit(0);
 			}
+			if(e.keyCode == 83) 
+			{
+				Mouse.show(); 
+			}
+			
+			if(e.keyCode == 72) 
+			{
+				Mouse.hide(); 
+			}		
 		}
+		
+	
+		
+	
 		
 		//function for resetting the application to the default state if there is no activity
 		private function checkForUser (e:TimerEvent):void
 		{
 			//reset lang to English  
-			changeLang("en"); 
-			home = true; 
-			en = true; 
-			tc = false; 
-			sc = false; 
+			if(home == false) 
+			{
+				changeLang("en"); 
+				home = true; 
+			}
 			
 			
 		}
@@ -514,6 +525,7 @@ package{
 		{
 			timeOut.reset(); 
 			timeOut.start(); 
+			home = false; 
 			
 		}
 		
@@ -559,45 +571,54 @@ package{
 				p7 = false; 
 			}
 			// Time out reset 
-			if(p1 && home)
+			else if(p1 && home)
 			{
 				fadeOutPopup(pop1); 
 				p1 = false; 
 			}
-			if(p2 && home)
+			else if(p2 && home)
 			{
 				fadeOutPopup(pop2); 
 				p2 = false; 
 			}
 			
-			if(p3 && home)
+			else if(p3 && home)
 			{
 				
 				fadeOutPopup(pop3); 
 				p3 = false; 
 			}
-			if(p4 && home)
+			else if(p4 && home)
 			{
 				fadeOutPopup(pop4); 
 				p4 = false; 
 			}
 			
-			if(p5 && home)
+			else if(p5 && home)
 			{
 				fadeOutPopup(pop5); 
 				p5 = false; 
 			}
-			if(p6 && home)
+			else if(p6 && home)
 			{
 				fadeOutPopup(pop6);  
 				p6 = false; 
 			}
-			if(p7 && home)
+			else if(p7 && home)
 			{
 				fadeOutPopup(pop7);  
 				p7 = false; 
 			}
-	
+			else(home)
+			{
+				returnToHomeState(); 
+			}
+		}
+		
+		private function returnToHomeState():void
+		{
+			changeLang("en");
+			
 		}
 		private function fadeOutPopup(pop:Sprite):void
 		{
