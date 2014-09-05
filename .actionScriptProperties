@@ -33,7 +33,6 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="3" linkType="1" path="starling/starling/bin/starling.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="C:/Users/Acer/Documents/GitHub/NYHS_Page_Turner/libraries/feathers-1.3.0/swc/feathers.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
