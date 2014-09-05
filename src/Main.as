@@ -25,7 +25,8 @@ package{
 		
 		//tint quad for shading 
 		private var q:Quad; 
-		
+		//debug fade 
+		var fadeTest:Number = 3000; 
 		//reset timer 
 		private var timeOut:Timer;
 		//private var timeBeforeReset = 90000; 
@@ -81,7 +82,7 @@ package{
 		//collection of all photo Btns as a single sprite 
 		public var btns:Sprite;  
 		//data collection of all btns 
-		//public var allBtns:Vector.<Button>; 
+		public var allBtns:Vector.<Button>; 
 		//popup background 
 		[Embed(source="./assets/popup.png")]
 		private var popupBit:Class; 
@@ -166,8 +167,8 @@ package{
 			
 			//create an object to hold all buttons in
 			btns = new Sprite(); 
-			btns.width = stage.stageWidth; 
-			btns.height = stage.height; 
+//			btns.width = stage.stageWidth; 
+//			btns.height = stage.height; 
 			
 			//add the background image and put it at the 0 layer
 			var bgBitmap = new bgBit(); 
@@ -272,7 +273,7 @@ package{
 			
 			//turn all the alpha of the popup pieces to 0 to start
 			popupPieces.alpha = 0.0; 
-			
+			//put common elements at the bottom
 			popups.addChildAt(popupPieces, 0); 
 			popups.addChildAt(pop1,1); 
 			popups.addChildAt(pop2, 2);
@@ -391,12 +392,13 @@ package{
 			addEventListener(starling.events.KeyboardEvent.KEY_DOWN, quitOut);
 						
 			//set up a full screen black tint for behind the open popup. 
-			q = new Quad(stage.stageWidth, stage.stageHeight, 0x000000);
+			q = new Quad(stage.stageWidth, stage.stageHeight, 0xFF0000);
 			q.name = "q"; 
 			btns.addChild(q); 
 			q.alpha = 0; 
 			//Make it non-interactive. 
 			q.touchable = false; 
+	
 		}
 		
 		private function setDefaultBtns():void
@@ -626,7 +628,7 @@ package{
 				fadeOutPopup(pop7);  
 				p7 = false; 
 			}
-//			trace(q.alpha); 
+			trace(q.alpha); 
 		}
 		
 		private function fadeOutPopup(pop:Sprite):void
@@ -671,7 +673,7 @@ package{
 			
 			resetTimeout(); 
 			//make the background buttons non-interactive for now. 
-			changeBtnState(false); 
+			//changeBtnState(false); 
 			//fade up the black background tint. 
 
 			TweenLite.to(q, fadeUpPopup , {alpha:.3});
@@ -749,8 +751,6 @@ package{
 			pop5.setLang(s); 
 			pop6.setLang(s); 
 			pop7.setLang(s); 
-		}
-		
-		
+		}		
 	}
 }
