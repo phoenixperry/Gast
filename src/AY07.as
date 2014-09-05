@@ -36,6 +36,7 @@ package
 		{
 			super();
 			//start off with English as the default langugae 
+
 			var photoBitmap = new photoBit(); 
 			photoTexture = Texture.fromBitmap(photoBitmap); 
 			photoImage = new Image(photoTexture); 
