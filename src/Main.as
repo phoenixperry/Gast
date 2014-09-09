@@ -146,7 +146,7 @@ package{
 		
 		//state machine mechanics 
 		private var p1:Boolean,p2:Boolean,p3:Boolean,p4:Boolean,p5:Boolean,p6:Boolean,p7:Boolean = false; 
-		private var home:Boolean = false; 
+		private var home:Boolean = true; 
 		private var back:Boolean = false; 
 		private var en:Boolean,sc:Boolean,tc:Boolean = true; 
 		
@@ -285,8 +285,8 @@ package{
 			var btn01Bitmap:Bitmap = new btn01bit();
 			btn01Texture = Texture.fromBitmap(btn01Bitmap); 
 			btn01 = new Button(btn01Texture, "", btn01Texture); 
-			btn01.x = 96; 
-			btn01.y = 816; 
+			btn01.x = 89; 
+			btn01.y = 814; 
 			btn01.name="btn01";
 			btn01.addEventListener(Event.TRIGGERED, popup1);	
 			btns.addChild(btn01);
@@ -295,8 +295,8 @@ package{
 			var btn02Bitmap:Bitmap = new btn02Bit();
 			btn02Texture = Texture.fromBitmap(btn02Bitmap); 
 			btn02 = new Button(btn02Texture, "", btn02Texture); 
-			btn02.x = 94; 
-			btn02.y = 436; 
+			btn02.x = 89; 
+			btn02.y = 434; 
 			btn02.name = "btn02";
 			btn02.addEventListener(Event.TRIGGERED, popup2);
 			btns.addChild(btn02); 
@@ -305,8 +305,8 @@ package{
 			var btn03Bitmap:Bitmap = new btn03Bit();
 			btn03Texture = Texture.fromBitmap(btn03Bitmap); 
 			btn03 = new Button(btn03Texture, "", btn03Texture); 
-			btn03.x = 94; 
-			btn03.y = 53; 
+			btn03.x = 89; 
+			btn03.y = 51; 
 			btn03.name = "btn03";
 			btn03.addEventListener(Event.TRIGGERED, popup3);
 			btns.addChild(btn03); 
@@ -314,8 +314,8 @@ package{
 			var btn04Bitmap:Bitmap = new btn04Bit();
 			btn04Texture = Texture.fromBitmap(btn04Bitmap); 
 			btn04 = new Button(btn04Texture, "", btn04Texture); 
-			btn04.x = 398; 
-			btn04.y = 26; 
+			btn04.x = 393; 
+			btn04.y = 24; 
 			btn04.name = "btn04";
 			btn04.addEventListener(Event.TRIGGERED, popup4);
 			btns.addChild(btn04); 
@@ -323,8 +323,8 @@ package{
 			var btn05Bitmap:Bitmap = new btn05Bit();
 			btn05Texture = Texture.fromBitmap(btn05Bitmap); 
 			btn05 = new Button(btn05Texture, "", btn05Texture); 
-			btn05.x = 1363; 
-			btn05.y = 24; 
+			btn05.x = 1358; 
+			btn05.y = 22; 
 			btn05.name = "btn05";
 			btn05.addEventListener(Event.TRIGGERED, popup5);
 			btns.addChild(btn05); 
@@ -332,16 +332,16 @@ package{
 			var btn06Bitmap:Bitmap = new btn06Bit();
 			btn06Texture = Texture.fromBitmap(btn06Bitmap); 
 			btn06 = new Button(btn06Texture,"", btn06Texture); 
-			btn06.x = 1642; 
-			btn06.y = 52; 
+			btn06.x = 1637; 
+			btn06.y = 50; 
 			btn06.name = "btn06";
 			btn06.addEventListener(Event.TRIGGERED, popup6);
 			btns.addChild(btn06);
 			var btn07Bitmap:Bitmap = new btn07Bit();
 			btn07Texture = Texture.fromBitmap(btn07Bitmap); 
 			btn07 = new Button(btn07Texture, "", btn07Texture); 
-			btn07.x = 1647; 
-			btn07.y = 444;
+			btn07.x = 1642; 
+			btn07.y = 442;
 			btn07.name = "btn07";
 			btn07.addEventListener(Event.TRIGGERED, popup7);
 			btns.addChild(btn07);
@@ -477,6 +477,7 @@ package{
 			sc = true; 
 			en = false; 
 			tc = false; 
+			trace("tc clicked"); 
 			
 		}
 		
@@ -612,12 +613,13 @@ package{
 			else(home)
 			{
 				returnToHomeState(); 
+				//home = false; 
 			}
 		}
 		
 		private function returnToHomeState():void
 		{
-			changeLang("en");
+			//changeLang("en");
 			
 		}
 		private function fadeOutPopup(pop:Sprite):void
@@ -718,6 +720,7 @@ package{
 			pop5.setLang(s); 
 			pop6.setLang(s); 
 			pop7.setLang(s); 
+			trace("set lang " + s); 
 		}
 		
 	

@@ -62,7 +62,7 @@ package
 			enTexture = Texture.fromBitmap(enBitmap); 
 			enImage = new Image(enTexture); 
 			enImage.x = 666; 
-			enImage.y = 286; 
+			enImage.y = 260; 
 			addChild(enImage);
 			setLang("en"); 
 		

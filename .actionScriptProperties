@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="Gast.as" projectUUID="4b9a869b-6302-47c6-b520-1a6137875c67" version="11">
+<actionScriptProperties analytics="false" mainApplicationPath="Gast3.as" projectUUID="77f3ebf0-db0a-428c-b29e-862b51afa5fb" version="11">
   <compiler additionalCompilerArguments="-locale en_US" advancedTelemetry="false" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="true" useDebugRSLSwfs="true" useFlashSDK="true" verifyDigests="true" warn="true">
-    <compilerSourcePath>
-      <compilerSourcePathEntry kind="1" linkType="1" path="libs/GreenSock-AS3-master/src"/>
-    </compilerSourcePath>
+    <compilerSourcePath/>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">
         <excludedEntries>
@@ -32,12 +30,13 @@
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/automation_agent.swc" useDefaultLinkType="false"/>
         </excludedEntries>
       </libraryPathEntry>
-      <libraryPathEntry kind="3" linkType="1" path="starling/starling/bin/starling.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="${DOCUMENTS}/cal_refugees/libs/swc/starling.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="${DOCUMENTS}/cal_refugees/libs/swc/greensock.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="Gast.as">
+    <application path="Gast3.as">
       <airExcludes/>
     </application>
   </applications>
@@ -47,7 +46,7 @@
   <flashCatalyst validateFlashCatalystCompatibility="false"/>
   <buildTargets>
     <buildTarget buildTargetName="default" platformId="default">
-      <airSettings airCertificatePath="C:/Users/Acer/Desktop/fb.p12" airTimestamp="false" anePathSet="true" version="1">
+      <airSettings airCertificatePath="C:/Users/Acer/Desktop/androidSigned.p12" airTimestamp="false" anePathSet="true" version="1">
         <airExcludes/>
         <anePaths/>
         <newLaunchParams/>
